@@ -1,0 +1,23 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: arial;
+}
+header{
+	background-color: green;
+}
+.container{
+	width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+footer{
+	background-color: brown;
+}
+footer p{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	color: white;
+}
