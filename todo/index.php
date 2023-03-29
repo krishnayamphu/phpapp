@@ -17,6 +17,7 @@
     </style>
 </head>
 <body>
+<?php require('include/delete.php'); ?>
 <header>
     <nav>
         <a href="/phpapp/todo">Home</a>
@@ -32,17 +33,7 @@
     </tr>
 
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "phpappdb";
-
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    require('../database/connect_db.php');
     $sql = "SELECT * FROM todo";
     $result = mysqli_query($conn, $sql);
 
@@ -54,8 +45,10 @@
             echo "<td>".$row["items"]. "</td> ";
             echo "<td>".$row["created_at"]. "</td> ";
             echo "<td>
-                <a href=''>Edit</a>
-                <form action=''>
+                <a href='edit.php?id=".$row['id']."'>Edit</a>
+                
+                <form action='".htmlspecialchars($_SERVER['PHP_SELF'])."' method='post'>
+                <input type='hidden' name='id' value='".$row['id']."'>
                 <button>Delete</button>
 </form>
             </td> ";
@@ -65,7 +58,8 @@
         echo "0 results";
     }
     mysqli_close($conn);
-    ?>
+?>
+
 </table>
 </body>
 </html>
