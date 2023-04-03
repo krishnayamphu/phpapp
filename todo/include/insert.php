@@ -4,12 +4,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require('../database/connect_db.php');
 
-    $sql = "INSERT INTO todo(items) VALUES ('$data')";
-    if (mysqli_query($conn, $sql)) {
+    // prepare and bind
+    $stmt = $conn->prepare("INSERT INTO todo(items) VALUES (?)");
+    $stmt->bind_param("s", $data);
+
+    if ($stmt->execute()) {
         echo "New record created successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "Error: " . mysqli_error($conn);
     }
-    mysqli_close($conn);
+    $stmt->close();
+    $conn->close();
 }
 ?>

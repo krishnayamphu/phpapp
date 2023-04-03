@@ -36,28 +36,28 @@
     require('../database/connect_db.php');
     $sql = "SELECT * FROM todo";
     $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) :
 
         // output data of each row
-        while($row = mysqli_fetch_assoc($result)) {
-            echo "<tr>";
-            echo "<td>".$row["id"]. "</td> ";
-            echo "<td>".$row["items"]. "</td> ";
-            echo "<td>".$row["created_at"]. "</td> ";
-            echo "<td>
-                <a href='edit.php?id=".$row['id']."'>Edit</a>
-                
-                <form action='".htmlspecialchars($_SERVER['PHP_SELF'])."' method='post'>
-                <input type='hidden' name='id' value='".$row['id']."'>
+        while($row = mysqli_fetch_assoc($result)):
+            ?>
+        <tr>
+            <td><?php echo $row["id"]; ?></td>
+            <td><?php echo $row["items"]; ?></td>
+            <td><?php echo $row["created_at"]; ?></td>
+            <td>
+                <a href='edit.php?id=<?php echo $row['id']; ?>'>Edit</a>
+                <form action='<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>' method='post'>
+                <input type='hidden' name='id' value='<?php echo $row['id']; ?>'>
                 <button>Delete</button>
-</form>
-            </td> ";
-            echo "</tr>";
-        }
-    } else {
+                </form>
+            </td>
+        </tr>
+    <?php
+        endwhile;
+    else :
         echo "0 results";
-    }
+    endif;
     mysqli_close($conn);
 ?>
 
