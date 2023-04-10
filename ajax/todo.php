@@ -19,8 +19,8 @@
 </head>
 <body>
 <form name="frm">
-    <input type="text" name="item" placeholder="Item">
-    <button type="button" onclick="postData()">Save</button>
+    <input type="text" id="txtname" name="item" required>
+    <button type="button" onclick="postData()">Send</button>
 </form>
 <br>
 <table>
@@ -30,33 +30,8 @@
         <th>Created Date</th>
         <th>Action</th>
     </tr>
-
-    <?php
-    require('../database/connect_db.php');
-    $sql = "SELECT * FROM todo";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) :
-        while ($row = mysqli_fetch_assoc($result)):
-            ?>
-            <tr>
-                <td><?php echo $row["id"]; ?></td>
-                <td><?php echo $row["items"]; ?></td>
-                <td><?php echo $row["created_at"]; ?></td>
-                <td>
-                    <a href='edit.php?id=<?php echo $row['id']; ?>'>Edit</a>
-                    <form action='<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>' method='post'>
-                        <input type='hidden' name='id' value='<?php echo $row['id']; ?>'>
-                        <button>Delete</button>
-                    </form>
-                </td>
-            </tr>
-        <?php
-        endwhile;
-    else :
-        echo "0 results";
-    endif;
-    mysqli_close($conn);
-    ?>
+    <tbody id="myData">
+    </tbody>
 </table>
 
 <script src="inc/main.js"></script>
